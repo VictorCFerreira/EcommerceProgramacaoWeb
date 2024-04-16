@@ -4,21 +4,13 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-import java.math.BigDecimal;
-
 @Data
-public class ProductDto {
+public class CategoriaDto {
 
     private int id;
 
     @NotNull
     @Size(min = 2, max = 50)
     private String name;
-
-    private String description;
-
-    private BigDecimal price;
-
-    private CategoryDto category;
 
 }

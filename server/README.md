@@ -783,16 +783,16 @@ Com o Token validado e o usuário autenticado e autorizado adicionado adicionado
 Com o processo de criação de usuário e autenticação funcionando, agora serão criadas as novas funcionalidades da API. Vamos criar as operações de **CRUD** para classe que irá armazenar a categoria que será relacionada ao produto. Para isso deverá ser criado o **model**, o **repository**, o **service** e o **controller**.
 
 
-Para representar uma categoria será criada a classe **Category** com os atributos **id** e **name**:
+Para representar uma categoria será criada a classe **Categoria** com os atributos **id** e **name**:
 
 ```java
 @Entity  
-@Table(name = "tb_category")  
+@Table(name = "tb_categoria")  
 @NoArgsConstructor  
 @AllArgsConstructor  
 @Builder  
 @Getter @Setter  
-public class Category {  
+public class Categoria {  
   
     @Id  
  @GeneratedValue(strategy = GenerationType.IDENTITY)  
@@ -807,8 +807,8 @@ public class Category {
   public boolean equals(Object o) {  
         if (this == o) return true;  
         if (o == null || getClass() != o.getClass()) return false;  
-        Category category = (Category) o;  
-        return Objects.equals(id, category.id);  
+        Categoria categoria = (Categoria) o;  
+        return Objects.equals(id, categoria.id);  
     }  
   
     @Override  
@@ -817,124 +817,124 @@ public class Category {
     }  
 }
 ```
-Para disponibilizar as operações de CRUD  da aplicação será criada a *interface* **CategoryRepository** que irá herdar as características de ***JpaRepository***, essa interface que faz parte do _framework_ Springn Data irá fornecer as operações de CRUD sem que seja necessário outras implementações.
+Para disponibilizar as operações de CRUD  da aplicação será criada a *interface* **CategoriaRepository** que irá herdar as características de ***JpaRepository***, essa interface que faz parte do _framework_ Springn Data irá fornecer as operações de CRUD sem que seja necessário outras implementações.
 
 ```java
-public interface CategoryRepository extends JpaRepository<Category, Long> {  
+public interface CategoriaRepository extends JpaRepository<Categoria, Long> {  
 }
 ```
-Agora será adicionada uma camada de ***service***, assim caso existam regras de negócio, regradas de validação, etc., essas funcionalidades podem ser adicionadas no *service*,  melhorando a estrutura do código-fonte. Será criada a *interface* **ICategoryService** no pacote **service** e na sequência será criada a implementação dessa *interface* no pacote **service.impl** com o nome de **CategoryServiceImpl**.
+Agora será adicionada uma camada de ***service***, assim caso existam regras de negócio, regradas de validação, etc., essas funcionalidades podem ser adicionadas no *service*,  melhorando a estrutura do código-fonte. Será criada a *interface* **ICategoriaService** no pacote **service** e na sequência será criada a implementação dessa *interface* no pacote **service.impl** com o nome de **CategoriaServiceImpl**.
 
 
 ```java
-public interface ICategoryService {  
-    List<Category> findAll();  
-    Page<Category> findAll(Pageable pageable);   
-    Category save(Category category);  
-    Category findOne(Long id);  
+public interface ICategoriaService {  
+    List<Categoria> findAll();  
+    Page<Categoria> findAll(Pageable pageable);   
+    Categoria save(Categoria categoria);  
+    Categoria findOne(Long id);  
     boolean exists(Long id);  
     void delete(Long id);  
 }
 ```
-Abaixo está o código da classe **CategoryServiceImpl** que utiliza-se de um objeto **categoryRepository** para realizar as operações de CRUD.
+Abaixo está o código da classe **CategoriaServiceImpl** que utiliza-se de um objeto **categoriaRepository** para realizar as operações de CRUD.
 ```java
 @Service  
-public class CategoryServiceImpl implements ICategoryService {  
-	private final CategoryRepository categoryRepository;  
+public class CategoriaServiceImpl implements ICategoriaService {  
+	private final CategoriaRepository categoriaRepository;  
   
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {  
-        this.categoryRepository = categoryRepository;  
+    public CategoriaServiceImpl(CategoriaRepository categoriaRepository) {  
+        this.categoriaRepository = categoriaRepository;  
     }  
   
     @Override  
-	public List<Category> findAll() {  
-        return categoryRepository.findAll();  
+	public List<Categoria> findAll() {  
+        return categoriaRepository.findAll();  
     }  
   
     @Override  
-	public Page<Category> findAll(Pageable pageable) {  
-        return categoryRepository.findAll(pageable);  
+	public Page<Categoria> findAll(Pageable pageable) {  
+        return categoriaRepository.findAll(pageable);  
     }  
   
     @Override  
-	public Category save(Category category) {  
-        return categoryRepository.save(category);  
+	public Categoria save(Categoria categoria) {  
+        return categoriaRepository.save(categoria);  
     }  
   
     @Override  
-	public Category findOne(Long id) {  
-        return categoryRepository.findById(id).orElse(null);  
+	public Categoria findOne(Long id) {  
+        return categoriaRepository.findById(id).orElse(null);  
     }  
   
     @Override  
 	public boolean exists(Long id) {  
-        return categoryRepository.existsById(id);  
+        return categoriaRepository.existsById(id);  
     }  
   
     @Override  
 	public void delete(Long id) {  
-        categoryRepository.deleteById(id);  
+        categoriaRepository.deleteById(id);  
     }  
 }
 ```
-No próximo passo será criada a classe que irá atuar como controlador das operações com categoria. No desenvolvimento do ***controller*** de categoria serão criados métodos para salvar, editar, listar e remover um registro de categoria. Além de um método para retornar o número de registros e se existe um registro na base de dados com o código informado. O _framework_ Spring Web será utilizado como base para desenvolvimento desse _controller_, iniciando pela anotação ***@RestController***, que indica que esse controlador irá atender requisições HTTP na URL `/categories` como pode ser observado na anotação ***@RequestMapping("categories")*** .
+No próximo passo será criada a classe que irá atuar como controlador das operações com categoria. No desenvolvimento do ***controller*** de categoria serão criados métodos para salvar, editar, listar e remover um registro de categoria. Além de um método para retornar o número de registros e se existe um registro na base de dados com o código informado. O _framework_ Spring Web será utilizado como base para desenvolvimento desse _controller_, iniciando pela anotação ***@RestController***, que indica que esse controlador irá atender requisições HTTP na URL `/categorias` como pode ser observado na anotação ***@RequestMapping("categorias")*** .
 
-No construtor da classe **CategoryController** é realizada a injeção de dependência do **service** de categoria (ICategoryService), pois é por meio dele que serão realizadas as operações com ligação ao banco de dados.
+No construtor da classe **CategoriaController** é realizada a injeção de dependência do **service** de categoria (ICategoriaService), pois é por meio dele que serão realizadas as operações com ligação ao banco de dados.
 
-O primeiro método implementado é o ***findAll()***, que retorna uma lista de categorias quando ocorrer uma requisição do tipo HTTP GET na URL `/categories`. Os demais métodos são apresentados nos comentários do código baixo.
+O primeiro método implementado é o ***findAll()***, que retorna uma lista de categorias quando ocorrer uma requisição do tipo HTTP GET na URL `/categorias`. Os demais métodos são apresentados nos comentários do código baixo.
 
 ```java
 @RestController  
-@RequestMapping("categories")  
-public class CategoryController {
+@RequestMapping("categorias")  
+public class CategoriaController {
 	  
-    private final ICategoryService categoryService;  
+    private final ICategoriaService categoriaService;  
 
-    public CategoryController(ICategoryService categoryService) {  
-        this.categoryService = categoryService;  
+    public CategoriaController(ICategoriaService categoriaService) {  
+        this.categoriaService = categoriaService;  
     }  
   
 	// O Método findAll() é executando quando é realizada uma
 	// requisição do tipo GET para:
-	// http://localhost:8025/categories
+	// http://localhost:8025/categorias
 	// e o retorno será um json no formato:
-	// [{id:1, name: "Category One"}, {...}, ...]
+	// [{id:1, name: "Categoria One"}, {...}, ...]
     @GetMapping  
-	public ResponseEntity<List<Category>> findAll() {  
-        return ResponseEntity.ok(categoryService.findAll());  
+	public ResponseEntity<List<Categoria>> findAll() {  
+        return ResponseEntity.ok(categoriaService.findAll());  
     }  
   
     // O Método create() é executando quando é realizada uma
 	// requisição do tipo POST para:
-	// http://localhost:8025/categories
+	// http://localhost:8025/categorias
 	// Recebe como parâmetro um objeto JSON no formato:
-	// {id: null, name: "Category One"}
+	// {id: null, name: "Categoria One"}
 	// e o retorno será um json no formato:
-	// {id:1, name: "Category One"}
+	// {id:1, name: "Categoria One"}
 	// Ou seja a categoria com o ID gerado ao armazenar o registro no banco de dados
     @PostMapping  
-    public ResponseEntity<Category> create(@RequestBody @Valid Category category) {  
-        categoryService.save(category);  
+    public ResponseEntity<Categoria> create(@RequestBody @Valid Categoria categoria) {  
+        categoriaService.save(categoria);  
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()  
                 .path("/{id}")  
-                .buildAndExpand( category.getId() ).toUri();  
+                .buildAndExpand( categoria.getId() ).toUri();  
   
-        return ResponseEntity.created( location ).body( category );  
+        return ResponseEntity.created( location ).body( categoria );  
     }  
     // O Método findOne() é executando quando é realizada uma
 	// requisição do tipo GET para:
-	// http://localhost:8025/categories/1 
+	// http://localhost:8025/categorias/1 
 	// onde o 1 é o ID da categoria que deverá ser retornada,
 	//e o retorno será um json no formato:
-	// {id:1, name: "Category One"}
-    @GetMapping("{id}") //http://localhost:8025/categories/1  
-    public ResponseEntity<Category> findOne(@PathVariable("id") Long id) {  
-        return ResponseEntity.ok(categoryService.findOne(id));  
+	// {id:1, name: "Categoria One"}
+    @GetMapping("{id}") //http://localhost:8025/categorias/1  
+    public ResponseEntity<Categoria> findOne(@PathVariable("id") Long id) {  
+        return ResponseEntity.ok(categoriaService.findOne(id));  
     }  
 
 	// O Método delete() é executando quando é realizada uma
 	// requisição do tipo DELETE para:
-	// http://localhost:8025/categories/1 
+	// http://localhost:8025/categorias/1 
 	// onde o 1 é o ID da categoria que deverá ser removida,
 	//e o retorno, no caso de sucesso será
 	//um corpo de requisição vazio com o status:
@@ -942,12 +942,12 @@ public class CategoryController {
     @DeleteMapping("{id}")  
     @ResponseStatus(HttpStatus.NO_CONTENT)  
     public void delete(@PathVariable Long id) {  
-        categoryService.delete(id);  
+        categoriaService.delete(id);  
     }  
   
     @GetMapping("page")  
-    // http://localhost:8025/categories/page?page=0&size=5&order=name&asc=true  
-  public ResponseEntity<Page<Category>> findAllPaged(  
+    // http://localhost:8025/categorias/page?page=0&size=5&order=name&asc=true  
+  public ResponseEntity<Page<Categoria>> findAllPaged(  
                                 @RequestParam int page,  
                                 @RequestParam int size,  
                                 @RequestParam(required = false) String order,  
@@ -958,20 +958,20 @@ public class CategoryController {
             pageRequest = PageRequest.of(page, size,  
                     asc ? Sort.Direction.ASC : Sort.Direction.DESC, order);  
         }  
-        return ResponseEntity.ok(categoryService.findAll(pageRequest));  
+        return ResponseEntity.ok(categoriaService.findAll(pageRequest));  
     }   
 }
 ```
 
-Agora será criada a classe **Product** para que possamos realizar as operações de CRUD com produtos e a classe **repository** que herda as características de **JpaRepository**.
+Agora será criada a classe **Produto** para que possamos realizar as operações de CRUD com produtos e a classe **repository** que herda as características de **JpaRepository**.
 
 ```java
 @Entity  
-@Table(name = "tb_product")  
+@Table(name = "tb_produto")  
 @AllArgsConstructor  
 @NoArgsConstructor  
 @Builder  
-public class Product {  
+public class Produto {  
   
     @Id  
     @GeneratedValue(strategy = GenerationType.IDENTITY)  
@@ -992,14 +992,14 @@ public class Product {
     private BigDecimal price;  
   
     @ManyToOne  
-    @JoinColumn(name = "category_id", referencedColumnName = "id")  
+    @JoinColumn(name = "categoria_id", referencedColumnName = "id")  
     @Getter @Setter  
-    private Category category;
+    private Categoria categoria;
  }
 ```
-Interface **ProductRepository **:
+Interface **ProdutoRepository **:
 ```java
-public interface ProductRepository extends JpaRepository<Product, Long> {  
+public interface ProdutoRepository extends JpaRepository<Produto, Long> {  
 }
 ```
 Os códigos da interface e implementação da camada ***service*** e ***controller*** seguem a mesma lógica que as que foram criadas para o CRUD de categoria. Seguindo as boas práticas de orientação a objetos o próximo passo é a criação de interfaces e classes genéricas para reduzir a quantidade de códigos redundantes.
@@ -1198,38 +1198,38 @@ public abstract class CrudController <T, D, ID extends Serializable> {
 
 ### Implementando o CRUD de Categoria com base na nova estrutura
 
-Inicialmente será ajustada a interface de categoria, **ICategoryService**, que agora ficará com o seguinte conteúdo:
+Inicialmente será ajustada a interface de categoria, **ICategoriaService**, que agora ficará com o seguinte conteúdo:
 
 ```java
-public interface ICategoryService extends ICrudService<Category, Long> {  
+public interface ICategoriaService extends ICrudService<Categoria, Long> {  
 }
 ```
 Como estamos herdando as características de **ICrudService** não é necessário reescrever a assinatura de todos os métodos. Na sequência é apresentada a implementação do ***service** de categoria:
 
 ```java
 @Service  
-public class CategoryServiceImpl extends CrudServiceImpl<Category, Long>  
-        implements ICategoryService {  
+public class CategoriaServiceImpl extends CrudServiceImpl<Categoria, Long>  
+        implements ICategoriaService {  
   
-    private final CategoryRepository categoryRepository;  
+    private final CategoriaRepository categoriaRepository;  
   
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {  
-        this.categoryRepository = categoryRepository;  
+    public CategoriaServiceImpl(CategoriaRepository categoriaRepository) {  
+        this.categoriaRepository = categoriaRepository;  
     }  
   
     @Override  
-    protected JpaRepository<Category, Long> getRepository() {  
-        return categoryRepository;  
+    protected JpaRepository<Categoria, Long> getRepository() {  
+        return categoriaRepository;  
     }  
 }
 ```
-A lógica é a mesma, estamos herdando as características da classe abstrata **CrudServiceImpl**, por isso todos os métodos lá implementados estarão disponíveis para as instâncias de **CategoryServiceImpl**. Novos métodos específicos para Categoria quando implementados devem primeiro ser declarados na interface ICategoryService e então implementados na classe CategoryServiceImpl.
+A lógica é a mesma, estamos herdando as características da classe abstrata **CrudServiceImpl**, por isso todos os métodos lá implementados estarão disponíveis para as instâncias de **CategoriaServiceImpl**. Novos métodos específicos para Categoria quando implementados devem primeiro ser declarados na interface ICategoriaService e então implementados na classe CategoriaServiceImpl.
 
 Antes de implementar a classe controladora, vamos criar o DTO de categoria:
 
 ```java
 @Data  
-public class CategoryDTO {  
+public class CategoriaDTO {  
   
     private Long id;  
   
@@ -1239,71 +1239,71 @@ public class CategoryDTO {
 }
 ```
 
-A camada de ***controller*** se assemelha a camada de serviços, em que as características serão herdadas da classe **CrudController**. A classe **CategoryController** ficará com a seguinte estrutura:
+A camada de ***controller*** se assemelha a camada de serviços, em que as características serão herdadas da classe **CrudController**. A classe **CategoriaController** ficará com a seguinte estrutura:
 
 ```java
 @RestController  
-@RequestMapping("categories")  
-public class CategoryController extends CrudController<Category, CategoryDTO, Long> {  
+@RequestMapping("categorias")  
+public class CategoriaController extends CrudController<Categoria, CategoriaDTO, Long> {  
   
-    private static ICategoryService categoryService;  
+    private static ICategoriaService categoriaService;  
     private static ModelMapper modelMapper;  
   
-    public CategoryController(ICategoryService categoryService,  
+    public CategoriaController(ICategoriaService categoriaService,  
                               ModelMapper modelMapper) {  
-        super(Category.class, CategoryDTO.class);  
-        CategoryController.categoryService = categoryService;  
-        CategoryController.modelMapper = modelMapper;  
+        super(Categoria.class, CategoriaDTO.class);  
+        CategoriaController.categoriaService = categoriaService;  
+        CategoriaController.modelMapper = modelMapper;  
     }  
   
     @Override  
-    protected ICrudService<Category, Long> getService() {  
-        return CategoryController.categoryService;  
+    protected ICrudService<Categoria, Long> getService() {  
+        return CategoriaController.categoriaService;  
     }  
   
     @Override  
     protected ModelMapper getModelMapper() {  
-        return CategoryController.modelMapper;  
+        return CategoriaController.modelMapper;  
     }  
 }
 ```
 
-As anotações  `@RestController` e `@RequestMapping("categories")` são mantidas, assim como a instância do objeto da camada ***service**. Entretanto agora foi adicionado a instância do objeto **modelMapper** e também foi chamado o construtor da classe abstrata passando o tipos: **Category.class** e **CategoryDTO.class**.
+As anotações  `@RestController` e `@RequestMapping("categorias")` são mantidas, assim como a instância do objeto da camada ***service**. Entretanto agora foi adicionado a instância do objeto **modelMapper** e também foi chamado o construtor da classe abstrata passando o tipos: **Categoria.class** e **CategoriaDTO.class**.
 
 Agora a implementação da estrutura para entidade de Produto ficará mais simples.
 
 ### Implementando o CRUD de Produto com base na nova estrutura
 
-Serão apresentadas na sequência a _interface_ **IProductService**, a classe **ProductServiceImpl**, a classe **ProductDTO** e a classe **ProductController**.
+Serão apresentadas na sequência a _interface_ **IProdutoService**, a classe **ProdutoServiceImpl**, a classe **ProdutoDTO** e a classe **ProdutoController**.
 
-#### IProductService
+#### IProdutoService
 ```java
-public interface IProductService extends ICrudService<Product, Long> {  
+public interface IProdutoService extends ICrudService<Produto, Long> {  
 }
 ```
 
-#### ProductServiceImpl
+#### ProdutoServiceImpl
 ```java
 @Service  
-public class ProductServiceImpl extends CrudServiceImpl<Product, Long>  
-            implements IProductService {  
+public class ProdutoServiceImpl extends CrudServiceImpl<Produto, Long>  
+            implements IProdutoService {  
   
-    private final ProductRepository productRepository;  
+    private final ProdutoRepository produtoRepository;  
   
-    public ProductServiceImpl(ProductRepository productRepository) {  
-        this.productRepository = productRepository;  
+    public ProdutoServiceImpl(ProdutoRepository produtoRepository) {  
+        this.produtoRepository = produtoRepository;  
     }  
   
     @Override  
-    protected JpaRepository<Product, Long> getRepository() {  
-        return productRepository;  
+    protected JpaRepository<Produto, Long> getRepository() {  
+        return produtoRepository;  
     }  
 }
 ```
-#### ProductDTO
+#### ProdutoDTO
 ```java
 @Data  
-public class ProductDTO {  
+public class ProdutoDTO {  
   
     private Long id;  
   
@@ -1316,29 +1316,29 @@ public class ProductDTO {
     @NotNull  
   private BigDecimal price;  
   
-    private CategoryDTO category;  
+    private CategoriaDTO categoria;  
 }
 ```
-#### ProductController
+#### ProdutoController
 
 ```java
 @RestController  
-@RequestMapping("products")  
-public class ProductController extends CrudController<Product, ProductDTO, Long> {  
+@RequestMapping("produtos")  
+public class ProdutoController extends CrudController<Produto, ProdutoDTO, Long> {  
   
-    private static IProductService productService;  
+    private static IProdutoService produtoService;  
   
     private static ModelMapper modelMapper;  
   
-    public ProductController(IProductService productService, ModelMapper modelMapper) {  
-        super(Product.class, ProductDTO.class);  
-        ProductController.productService = productService;  
-        ProductController.modelMapper = modelMapper;  
+    public ProdutoController(IProdutoService produtoService, ModelMapper modelMapper) {  
+        super(Produto.class, ProdutoDTO.class);  
+        ProdutoController.produtoService = produtoService;  
+        ProdutoController.modelMapper = modelMapper;  
     }  
   
     @Override  
-    protected ICrudService<Product, Long> getService() {  
-        return productService;  
+    protected ICrudService<Produto, Long> getService() {  
+        return produtoService;  
     }  
   
     @Override  
@@ -1359,12 +1359,12 @@ Adicionando no corpo da requisição um JSON com o ***username*** e ***password*
 
 O retorno da requisição será um **token** JWT. Para testarmos os _endpoints_ do *controller* de categoria vamos precisar do token que acabamos de receber.
 Para cadastrar uma nova categoria podemos fazer uma requisição do tipo HTTP POST para URL:
-`http://localhost:8025/categories`
+`http://localhost:8025/categorias`
 Adicionando no corpo da requisição um JSON com as propriedades de categoria:
-`{"id": null, name":"Category Test"}`
+`{"id": null, name":"Categoria Test"}`
 Além disso precisamos ir na aba de segurança do software Postman ou Insomnia e adicionar o **header** **Authorization** com o valor **Bearer token.gerado.nologin**. Após isso podemos enviar a requisição.
 Como retorno teremos o objeto com a categoria cadastrada, como o servidor retorna o próprio objeto ele virá com o ID gerado no momento da persistência da categoria.
-`{"id": 1, name":"Category Test"}`
+`{"id": 1, name":"Categoria Test"}`
 
 Os demais _endpoints_ da API seguem a mesma ideia, sendo que as URLs que precisam de autenticação sempre deverão receber um token válido.
 

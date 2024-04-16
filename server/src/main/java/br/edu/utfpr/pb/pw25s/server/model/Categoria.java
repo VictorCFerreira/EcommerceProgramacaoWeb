@@ -1,19 +1,18 @@
 package br.edu.utfpr.pb.pw25s.server.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Entity
-@Table(name = "tb_category")
+@Table(name = "tb_categoria")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Category {
+public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,5 +20,5 @@ public class Category {
 
     @NotNull
     @Size(min = 2, max = 100)
-    private String name;
+    private String nome;
 }
