@@ -1,6 +1,6 @@
 package br.edu.utfpr.pb.pw25s.server.service.impl;
 
-import br.edu.utfpr.pb.pw25s.server.service.ICrudService;
+import br.edu.utfpr.pb.pw25s.server.service.interfaces.ICrudService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

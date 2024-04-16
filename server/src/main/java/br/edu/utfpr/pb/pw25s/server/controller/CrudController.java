@@ -1,6 +1,6 @@
 package br.edu.utfpr.pb.pw25s.server.controller;
 
-import br.edu.utfpr.pb.pw25s.server.service.ICrudService;
+import br.edu.utfpr.pb.pw25s.server.service.interfaces.ICrudService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

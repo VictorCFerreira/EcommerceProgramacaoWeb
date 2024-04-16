@@ -2,8 +2,8 @@ package br.edu.utfpr.pb.pw25s.server.controller;
 
 import br.edu.utfpr.pb.pw25s.server.dto.CategoriaDto;
 import br.edu.utfpr.pb.pw25s.server.model.Categoria;
-import br.edu.utfpr.pb.pw25s.server.service.ICategoriaService;
-import br.edu.utfpr.pb.pw25s.server.service.ICrudService;
+import br.edu.utfpr.pb.pw25s.server.service.interfaces.ICategoriaService;
+import br.edu.utfpr.pb.pw25s.server.service.interfaces.ICrudService;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 

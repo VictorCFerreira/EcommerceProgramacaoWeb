@@ -2,7 +2,7 @@ package br.edu.utfpr.pb.pw25s.server.service.impl;
 
 import br.edu.utfpr.pb.pw25s.server.model.Categoria;
 import br.edu.utfpr.pb.pw25s.server.repository.CategoriaRepository;
-import br.edu.utfpr.pb.pw25s.server.service.ICategoriaService;
+import br.edu.utfpr.pb.pw25s.server.service.interfaces.ICategoriaService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 

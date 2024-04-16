@@ -12,17 +12,19 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Builder
-public class Product {
+public class ItemPedido {
 
-    private BigDecimal price;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private Int quantidade;
+    private BigDecimal preco;
 
-    @JoinColumn(name = "pedido_id")
-    private Pedido pedido;
+    private int quantidade;
 
-    @JoinColumn(name = "produto_id")
-    private Produto produto;
+    private long pedidoId;
+
+    private long produtoId;
 }
 
 

@@ -1,28 +1,28 @@
 package br.edu.utfpr.pb.pw25s.server.controller;
 
-import br.edu.utfpr.pb.pw25s.server.dto.ProdutoDto;
-import br.edu.utfpr.pb.pw25s.server.model.Produto;
+import br.edu.utfpr.pb.pw25s.server.dto.ItemPedidoDto;
+import br.edu.utfpr.pb.pw25s.server.model.ItemPedido;
 import br.edu.utfpr.pb.pw25s.server.service.interfaces.ICrudService;
-import br.edu.utfpr.pb.pw25s.server.service.interfaces.IProdutoService;
+import br.edu.utfpr.pb.pw25s.server.service.interfaces.IItemPedidoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("produtos")
-public class ProdutoController extends CrudController<Produto, ProdutoDto, Long>{
+@RequestMapping("item-pedido")
+public class ItemPedidoController extends CrudController<ItemPedido, ItemPedidoDto, Long>{
 
-    private final IProdutoService service;
+    private final IItemPedidoService service;
     private final ModelMapper modelMapper;
 
-    public ProdutoController(IProdutoService service, ModelMapper modelMapper) {
-        super(Produto.class, ProdutoDto.class);
+    public ItemPedidoController(IItemPedidoService service, ModelMapper modelMapper) {
+        super(ItemPedido.class, ItemPedidoDto.class);
         this.service = service;
         this.modelMapper = modelMapper;
     }
 
     @Override
-    protected ICrudService<Produto, Long> getService() {
+    protected ICrudService<ItemPedido, Long> getService() {
         return service;
     }
 
