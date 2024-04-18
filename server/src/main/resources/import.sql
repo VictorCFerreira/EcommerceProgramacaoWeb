@@ -1,4 +1,4 @@
--- insert into tb_categoria (name) values ('Informática');
+insert into tb_categoria (nome) values ('Informática');
 -- insert into tb_categoria (name) values ('UD');
 -- insert into tb_categoria (name) values ('Cozinha');
 -- insert into tb_categoria (name) values ('Móveis');
