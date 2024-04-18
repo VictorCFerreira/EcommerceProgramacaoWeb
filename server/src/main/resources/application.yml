@@ -25,9 +25,9 @@ spring:
     activate:
       on-profile: dev-postgres
   datasource:
-    url: jdbc:postgresql://localhost:5432/pw25s
+    url: jdbc:postgresql://localhost:5432/projetoWeb
     username: postgres
-    password: 1
+    password: 1234
   jpa:
     hibernate:
       ddl-auto: create-drop

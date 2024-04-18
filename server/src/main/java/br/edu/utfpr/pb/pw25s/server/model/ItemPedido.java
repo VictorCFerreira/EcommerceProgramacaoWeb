@@ -22,9 +22,13 @@ public class ItemPedido {
 
     private int quantidade;
 
-    private long pedidoId;
+    @ManyToOne
+    @JoinColumn(name = "pedido")
+    private Pedido pedido;
 
-    private long produtoId;
+    @ManyToOne
+    @JoinColumn(name = "produto")
+    private Produto produto;
 }
 
 

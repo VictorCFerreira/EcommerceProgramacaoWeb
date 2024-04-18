@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_pedido")
@@ -26,6 +27,9 @@ public class Pedido {
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private User usuario;
+
+    @OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ItemPedido> itens;
 
 }
 
