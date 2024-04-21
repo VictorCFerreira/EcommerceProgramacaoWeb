@@ -11,10 +11,9 @@ import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("pedidos")
@@ -37,6 +36,11 @@ public class PedidoController extends CrudController<Pedido, PedidoDto, Long>{
     @Override
     protected ModelMapper getModelMapper() {
         return modelMapper;
+    }
+
+    @GetMapping("user/{id}")
+    public ResponseEntity<List<Pedido>> findByUser(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findAllByUsuarioId(id));
     }
 
 }

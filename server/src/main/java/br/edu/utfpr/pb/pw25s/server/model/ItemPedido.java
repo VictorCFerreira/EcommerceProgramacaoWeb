@@ -1,5 +1,6 @@
 package br.edu.utfpr.pb.pw25s.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,7 @@ public class ItemPedido {
     private int quantidade;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "pedido")
     private Pedido pedido;
 

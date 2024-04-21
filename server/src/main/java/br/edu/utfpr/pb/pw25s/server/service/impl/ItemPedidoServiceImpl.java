@@ -9,6 +9,8 @@ import br.edu.utfpr.pb.pw25s.server.service.interfaces.IPedidoService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class ItemPedidoServiceImpl extends CrudServiceImpl<ItemPedido, Long>
                                     implements IItemPedidoService {
@@ -24,4 +26,9 @@ public class ItemPedidoServiceImpl extends CrudServiceImpl<ItemPedido, Long>
         return itemPedidoRepository;
     }
 
+    @Override
+    public ItemPedido save(ItemPedido item) {
+        item.setPreco(BigDecimal.valueOf(item.getQuantidade()).multiply(item.getProduto().getPreco()));
+        return getRepository().save(item);
+    }
 }

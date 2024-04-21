@@ -14,11 +14,11 @@ public class ProdutoDto {
 
     @NotNull
     @Size(min = 2, max = 50)
-    private String name;
+    private String nome;
 
-    private String description;
+    private String descricao;
 
-    private BigDecimal price;
+    private BigDecimal preco;
 
     private CategoriaDto categoria;
 

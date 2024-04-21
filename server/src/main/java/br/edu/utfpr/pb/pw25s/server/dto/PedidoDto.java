@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,16 +18,18 @@ public class PedidoDto {
     private int id;
 
     @NotNull
-    @Size(min = 2, max = 50)
-    private String name;
-
-    @NotNull
     private Date data;
 
+    @NotNull
+    @Size(min = 2, max = 50)
     private String descricao;
 
-    private User user;
+    private BigDecimal totalPedido;
 
-    private List<ItemPedido> itens = new ArrayList<>();
+    @NotNull
+    private UsuarioDto usuario;
+
+    @NotNull
+    private List<ItemPedidoDto> itens = new ArrayList<>();
 
 }

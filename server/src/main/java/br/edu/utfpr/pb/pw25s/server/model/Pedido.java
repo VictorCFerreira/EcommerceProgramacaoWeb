@@ -24,6 +24,8 @@ public class Pedido {
 
     private String descricao;
 
+    private BigDecimal totalPedido;
+
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private User usuario;

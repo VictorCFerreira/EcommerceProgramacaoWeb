@@ -31,7 +31,7 @@ public abstract class CrudController <T, D, ID extends Serializable> {
         return getModelMapper().map(entity, this.typeDtoClass);
     }
 
-    private T convertToEntity(D entityDto) {
+    private T convertToEntity(D entityDto ) {
         return getModelMapper().map(entityDto, this.typeClass);
     }
 
@@ -78,8 +78,8 @@ public abstract class CrudController <T, D, ID extends Serializable> {
 
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<D> update(@PathVariable ID id, @RequestBody @Valid D entity) {
+    @PutMapping
+    public ResponseEntity<D> update(@RequestBody @Valid D entity) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(convertToDto(getService().save(convertToEntity(entity))));
 
