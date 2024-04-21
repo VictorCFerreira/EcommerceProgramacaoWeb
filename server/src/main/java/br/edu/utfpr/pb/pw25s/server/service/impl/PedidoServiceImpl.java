@@ -8,9 +8,11 @@ import br.edu.utfpr.pb.pw25s.server.service.interfaces.IPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PedidoServiceImpl extends CrudServiceImpl<Pedido, Long>
@@ -34,7 +36,26 @@ public class PedidoServiceImpl extends CrudServiceImpl<Pedido, Long>
     }
 
     @Override
+    @Transactional
     public Pedido save(Pedido pedido) {
+
+        // remove os itens do pedido que foram excluidos
+        if (pedido.getId() != null && pedido.getId() != 0) {
+            Pedido lastPedido = findOne(pedido.getId());
+            if (lastPedido != null) {
+                List<Long> idDetalhes = pedido.getItens().stream()
+                        .map(ItemPedido::getId)
+                        .collect(Collectors.toList());
+
+                for (ItemPedido lastItem : lastPedido.getItens()) {
+                    if (!idDetalhes.contains(lastItem.getId())) {
+                        // se o id nao esta mais entre os que estao sendo salvos, é pq foi apagado
+                        itemPedidoService.delete(lastItem.getId());
+                    }
+                }
+            }
+        }
+
         pedido.setTotalPedido(BigDecimal.valueOf(0));
         for (ItemPedido item : pedido.getItens()) {
             Produto prod = produtoService.findOne(item.getProduto().getId());
@@ -43,17 +64,6 @@ public class PedidoServiceImpl extends CrudServiceImpl<Pedido, Long>
             pedido.setTotalPedido(pedido.getTotalPedido().add(item.getPreco()));
         }
         return getRepository().save(pedido);
-    }
-
-    @Override
-    public void delete(Long id) {
-        Pedido pedido = pedidoRepository.findById(id).orElse(null);
-        if(pedido != null && !pedido.getItens().isEmpty()) {
-            for(ItemPedido item : pedido.getItens()){
-                itemPedidoService.delete(item.getId());
-            }
-        }
-        getRepository().deleteById(id);
     }
 
     @Override
