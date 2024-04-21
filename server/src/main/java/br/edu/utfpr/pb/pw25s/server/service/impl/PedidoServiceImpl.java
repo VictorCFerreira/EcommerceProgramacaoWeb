@@ -21,6 +21,9 @@ public class PedidoServiceImpl extends CrudServiceImpl<Pedido, Long>
     @Autowired
     ProdutoServiceImpl produtoService;
 
+    @Autowired
+    ItemPedidoServiceImpl itemPedidoService;
+
     public PedidoServiceImpl(PedidoRepository pedidoRepository) {
         this.pedidoRepository = pedidoRepository;
     }
@@ -40,6 +43,17 @@ public class PedidoServiceImpl extends CrudServiceImpl<Pedido, Long>
             pedido.setTotalPedido(pedido.getTotalPedido().add(item.getPreco()));
         }
         return getRepository().save(pedido);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Pedido pedido = pedidoRepository.findById(id).orElse(null);
+        if(pedido != null && !pedido.getItens().isEmpty()) {
+            for(ItemPedido item : pedido.getItens()){
+                itemPedidoService.delete(item.getId());
+            }
+        }
+        getRepository().deleteById(id);
     }
 
     @Override
