@@ -38,7 +38,7 @@ public class PedidoController extends CrudController<Pedido, PedidoDto, Long>{
         return modelMapper;
     }
 
-    @GetMapping("user/{id}")
+    @GetMapping("get-by-user/{id}")
     public ResponseEntity<List<Pedido>> findByUser(@PathVariable Long id) {
         return ResponseEntity.ok(service.findAllByUsuarioId(id));
     }
