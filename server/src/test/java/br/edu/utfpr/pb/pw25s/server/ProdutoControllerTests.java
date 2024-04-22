@@ -56,12 +56,10 @@ public class ProdutoControllerTests {
         Produto produto2 = criarProduto("Produto 2", "Descricaoo do Produto 2", BigDecimal.valueOf(200), categoriaInserida);
         produtoRepository.saveAll(List.of(produto1, produto2));
 
-
         ResponseEntity<Produto[]> response =
                 testRestTemplate.getForEntity(
                         API_PRODUTOS,
                         Produto[].class);
-
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
@@ -78,12 +76,10 @@ public class ProdutoControllerTests {
         Produto produto2 = criarProduto("Produto 2", "Descricaoo do Produto 2", BigDecimal.valueOf(200), categoriaInserida);
         produtoRepository.saveAll(List.of(produto1, produto2));
 
-
         ResponseEntity<Produto[]> response =
                 testRestTemplate.getForEntity(
                         API_PRODUTOS + "/get-by-categoria/" + categoriaInserida.getId(),
                         Produto[].class);
-
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
@@ -105,7 +101,6 @@ public class ProdutoControllerTests {
                         API_PRODUTOS   + "/"+ produtoInserido.getId(),
                         Produto.class);
 
-
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
     }
@@ -118,8 +113,4 @@ public class ProdutoControllerTests {
                 .categoria(categoria)
                 .build();
     }
-
-
-
-
 }

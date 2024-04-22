@@ -39,6 +39,8 @@ public class PedidoServiceImpl extends CrudServiceImpl<Pedido, Long>
     @Transactional
     public Pedido save(Pedido pedido) {
 
+        // pegar o ID do cliente pelo TOKEN
+
         // remove os itens do pedido que foram excluidos
         if (pedido.getId() != null && pedido.getId() != 0) {
             Pedido lastPedido = findOne(pedido.getId());
