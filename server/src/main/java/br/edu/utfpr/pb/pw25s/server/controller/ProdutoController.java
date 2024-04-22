@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("produtos")
+    @RequestMapping("produtos")
 public class ProdutoController extends CrudController<Produto, ProdutoDto, Long>{
 
     private final IProdutoService service;
