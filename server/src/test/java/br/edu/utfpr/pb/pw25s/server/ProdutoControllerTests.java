@@ -15,6 +15,7 @@ import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -41,7 +42,7 @@ public class ProdutoControllerTests {
     public void limparBaseDeDados() {
         produtoRepository.deleteAll();
         testRestTemplate.getRestTemplate().getInterceptors().clear();
-        login();
+//        login();
     }
 
     @Test
@@ -57,11 +58,42 @@ public class ProdutoControllerTests {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
+    @Test
+    @DisplayName("Ao buscar todos os produtos, deve retornar uma lista com todos os produtos cadastrados")
+    public void buscarTodosProdutos_deveRetornarListaDeProdutos() {
+        // Cria alguns produtos de teste na base de dados
+        Produto produto1 = criarProduto("Produto 1", "Descricaoo do Produto 1", BigDecimal.valueOf(100));
+        Produto produto2 = criarProduto("Produto 2", "Descricaoo do Produto 2", BigDecimal.valueOf(200));
+        produtoRepository.saveAll(List.of(produto1, produto2));
+
+        // Faz a requisição para obter todos os produtos
+        ResponseEntity<Produto[]> response =
+                testRestTemplate.getForEntity(
+                        API_PRODUTOS,
+                        Produto[].class);
+
+
+        // Verifica se a requisição foi bem-sucedida e se a lista de produtos não está vazia
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody()).hasSize(2); // Verifica se a lista possui dois produtos, que foram inseridos acima
+    }
+
+
+
     private Produto criarProdutoValido() {
         return Produto.builder()
                 .nome("test-produto")
                 .descricao("test-description")
                 .preco(BigDecimal.TEN)
+                .build();
+    }
+
+    private Produto criarProduto(String nome, String descricao, BigDecimal preco) {
+        return Produto.builder()
+                .nome(nome)
+                .descricao(descricao)
+                .preco(preco)
                 .build();
     }
 
