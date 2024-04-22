@@ -1,7 +1,9 @@
 package br.edu.utfpr.pb.pw25s.server;
 
+import br.edu.utfpr.pb.pw25s.server.model.Categoria;
 import br.edu.utfpr.pb.pw25s.server.model.Produto;
 import br.edu.utfpr.pb.pw25s.server.model.User;
+import br.edu.utfpr.pb.pw25s.server.repository.CategoriaRepository;
 import br.edu.utfpr.pb.pw25s.server.repository.ProdutoRepository;
 import br.edu.utfpr.pb.pw25s.server.repository.UserRepository;
 import br.edu.utfpr.pb.pw25s.server.shared.GenericResponse;
@@ -38,6 +40,9 @@ public class ProdutoControllerTests {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
     @BeforeEach
     public void limparBaseDeDados() {
         produtoRepository.deleteAll();
@@ -46,31 +51,72 @@ public class ProdutoControllerTests {
     }
 
     @Test
-    @DisplayName("Ao buscar todos os produtos, deve retornar uma lista com todos os produtos cadastrados")
     public void buscarTodosProdutos_deveRetornarListaDeProdutos() {
-        // Cria alguns produtos de teste na base de dados
-        Produto produto1 = criarProduto("Produto 1", "Descricaoo do Produto 1", BigDecimal.valueOf(100));
-        Produto produto2 = criarProduto("Produto 2", "Descricaoo do Produto 2", BigDecimal.valueOf(200));
+
+        Categoria categoriaInserida = categoriaRepository.save(Categoria.builder().nome("CategoriaTeste").build());
+
+        Produto produto1 = criarProduto("Produto 1", "Descricaoo do Produto 1", BigDecimal.valueOf(100), categoriaInserida);
+        Produto produto2 = criarProduto("Produto 2", "Descricaoo do Produto 2", BigDecimal.valueOf(200), categoriaInserida);
         produtoRepository.saveAll(List.of(produto1, produto2));
 
-        // Faz a requisição para obter todos os produtos
+
         ResponseEntity<Produto[]> response =
                 testRestTemplate.getForEntity(
                         API_PRODUTOS,
                         Produto[].class);
 
 
-        // Verifica se a requisição foi bem-sucedida e se a lista de produtos não está vazia
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody()).hasSize(2); // Verifica se a lista possui dois produtos, que foram inseridos acima
+        assertThat(response.getBody()).hasSize(2);
     }
 
-    private Produto criarProduto(String nome, String descricao, BigDecimal preco) {
+    @Test
+    public void buscarProdutosPorCategoria_deveRetornarListaDeProdutos() {
+
+        Categoria categoriaInserida = categoriaRepository.save(Categoria.builder().nome("CategoriaTeste").build());
+
+        Produto produto1 = criarProduto("Produto 1", "Descricaoo do Produto 1", BigDecimal.valueOf(100), categoriaInserida);
+        Produto produto2 = criarProduto("Produto 2", "Descricaoo do Produto 2", BigDecimal.valueOf(200), categoriaInserida);
+        produtoRepository.saveAll(List.of(produto1, produto2));
+
+
+        ResponseEntity<Produto[]> response =
+                testRestTemplate.getForEntity(
+                        API_PRODUTOS + "/get-by-categoria/" + categoriaInserida.getId(),
+                        Produto[].class);
+
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody()).hasSize(2);
+    }
+
+    @Test
+    public void buscarProdutosPorId_deveRetornarProduto() {
+
+        Categoria categoriaInserida = categoriaRepository.save(Categoria.builder().nome("CategoriaTeste").build());
+
+        Produto produto = criarProduto("Produto", "Descricao do Produto", BigDecimal.valueOf(100), categoriaInserida);
+        Produto produtoInserido = produtoRepository.save(produto);
+
+        System.out.println("aaa: " + API_PRODUTOS   + "/"+  produtoInserido.getId());
+        ResponseEntity<Produto> response =
+                testRestTemplate.getForEntity(
+                        API_PRODUTOS   + "/"+ produtoInserido.getId(),
+                        Produto.class);
+
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+    }
+
+    private Produto criarProduto(String nome, String descricao, BigDecimal preco, Categoria categoria) {
         return Produto.builder()
                 .nome(nome)
                 .descricao(descricao)
                 .preco(preco)
+                .categoria(categoria)
                 .build();
     }
 
