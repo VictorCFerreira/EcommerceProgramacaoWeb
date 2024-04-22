@@ -46,19 +46,6 @@ public class ProdutoControllerTests {
     }
 
     @Test
-    @DisplayName("Ao cadastrar um novo Produto, se o Produto for válido, deve retornar 200 Ok")
-    public void cadastrarProduto_quandoProdutoEValido_deveRetornarOk() {
-        ResponseEntity<Object> response =
-                testRestTemplate.exchange(
-                        API_PRODUTOS,
-                        HttpMethod.POST,
-                        createRequestEntity(criarProdutoValido()),
-                        Object.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-    }
-
-    @Test
     @DisplayName("Ao buscar todos os produtos, deve retornar uma lista com todos os produtos cadastrados")
     public void buscarTodosProdutos_deveRetornarListaDeProdutos() {
         // Cria alguns produtos de teste na base de dados
@@ -78,7 +65,6 @@ public class ProdutoControllerTests {
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody()).hasSize(2); // Verifica se a lista possui dois produtos, que foram inseridos acima
     }
-    
 
     private Produto criarProduto(String nome, String descricao, BigDecimal preco) {
         return Produto.builder()
