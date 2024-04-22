@@ -38,19 +38,16 @@ public class ProdutoControllerTests {
     private ProdutoRepository produtoRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private CategoriaRepository categoriaRepository;
 
     @BeforeEach
     public void limparBaseDeDados() {
         produtoRepository.deleteAll();
         testRestTemplate.getRestTemplate().getInterceptors().clear();
-//        login();
     }
 
     @Test
+    @DisplayName("Espera retorno de produtos inseridos para teste usando findAll")
     public void buscarTodosProdutos_deveRetornarListaDeProdutos() {
 
         Categoria categoriaInserida = categoriaRepository.save(Categoria.builder().nome("CategoriaTeste").build());
@@ -72,6 +69,7 @@ public class ProdutoControllerTests {
     }
 
     @Test
+    @DisplayName("Espera retorno de produtos inseridos para teste usando findByCategoria, pesquisando pela categoria inserida")
     public void buscarProdutosPorCategoria_deveRetornarListaDeProdutos() {
 
         Categoria categoriaInserida = categoriaRepository.save(Categoria.builder().nome("CategoriaTeste").build());
@@ -93,6 +91,7 @@ public class ProdutoControllerTests {
     }
 
     @Test
+    @DisplayName("Espera retorno de produto único inserido, usando findOne")
     public void buscarProdutosPorId_deveRetornarProduto() {
 
         Categoria categoriaInserida = categoriaRepository.save(Categoria.builder().nome("CategoriaTeste").build());
@@ -120,12 +119,6 @@ public class ProdutoControllerTests {
                 .build();
     }
 
-    private User createValidUser() {
-        return User.builder()
-                .username("test-user")
-                .displayName("test-Display")
-                .password("P4ssword").build();
-    }
 
 
 
