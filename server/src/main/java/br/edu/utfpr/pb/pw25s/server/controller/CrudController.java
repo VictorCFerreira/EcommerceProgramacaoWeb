@@ -37,10 +37,12 @@ public abstract class CrudController <T, D, ID extends Serializable> {
 
     @GetMapping //http://ip.api:port/classname
     public ResponseEntity<List<D>> findAll() {
+        List<D> result = getService().findAll().stream().map(
+                this::convertToDto).collect(Collectors.toList()
+        );
+        System.out.println(result);
         return ResponseEntity.ok(
-                getService().findAll().stream().map(
-                        this::convertToDto).collect(Collectors.toList()
-                )
+                result
         );
     }
 
