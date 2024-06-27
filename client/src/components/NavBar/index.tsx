@@ -1,6 +1,7 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "@/assets/book-logo.png";
 import AuthService from "@/services/AuthService";
+import { CloseButton } from "@chakra-ui/react";
 
 export function NavBar() {
   const navigate = useNavigate();
@@ -41,9 +42,10 @@ export function NavBar() {
               </li> */}
             </ul>
             <div className="ms-auto">
-              <button className="btn btn-light" onClick={onClickLogout}>
+              {/* <button className="btn btn-light" onClick={onClickLogout}>
                 &times; Sair
-              </button>
+              </button> */}
+              <CloseButton />
             </div>
           </div>
         </nav>

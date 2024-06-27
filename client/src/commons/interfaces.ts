@@ -11,13 +11,19 @@ export interface IUserLogin {
 
 export interface ICategory {
   id?: number;
-  name: string;
+  nome: string;
 }
 
 export interface IProduct {
   id?: number;
-  name: string;
-  price: number;
-  description: string;
-  category: ICategory;
+  nome: string;
+  preco: number;
+  descricao: string;
+  categoria: ICategory;
+  imagem: string;
+}
+
+export class Carrinho {
+  produto: IProduct;
+  quantidade: number;
 }

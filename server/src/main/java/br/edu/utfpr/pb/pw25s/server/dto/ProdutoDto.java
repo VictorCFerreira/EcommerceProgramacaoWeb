@@ -22,4 +22,6 @@ public class ProdutoDto {
 
     private CategoriaDto categoria;
 
+    private String imagem;
+
 }
