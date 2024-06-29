@@ -3,20 +3,20 @@ import { IProduct } from '@/commons/interfaces';
 import { Card, CardHeader, CardBody, Heading, Stack, StackDivider, Box, Text, Button, Image, Divider, CardFooter, ButtonGroup, Spacer } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
-interface ProductCardProps {
+interface ProductCardAux {
   product: IProduct;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardAux> = ({ product }) => {
 
   const navigate = useNavigate(); 
 
-  const handleCardClick = () => {
+  const onClickCard = () => {
     navigate(`/produto/${product.id}`);
   };
 
   return (
-    <Card maxW='sm' cursor="pointer" onClick={handleCardClick}>
+    <Card maxW='sm' cursor="pointer" onClick={onClickCard}>
       <CardBody className='pb-0'>
         <Image
           src={product.imagem}

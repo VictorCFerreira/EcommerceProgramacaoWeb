@@ -4,7 +4,7 @@ import ProductService from "@/services/ProductService";
 import { useEffect, useState } from "react";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/Card";
-import { SimpleGrid } from "@chakra-ui/react";
+import { Box, SimpleGrid } from "@chakra-ui/react";
 
 export function HomePage() {
 
@@ -30,9 +30,9 @@ export function HomePage() {
     <>
       <NavBar />
       <main className="container">
-        <div className="text-center">
+        <Box className="text-center" pt="90px">
           <h1 className="h3 mb-3 fw-normal">Produtos</h1>
-        </div>
+        </Box>
         
         <SimpleGrid columns={{ sm: 2, md: 3, lg: 4 }} spacing={8}>
           {data.map((product) => (
@@ -41,9 +41,9 @@ export function HomePage() {
         </SimpleGrid>
 
         {apiError && (
-          <div className="alert alert-danger mt-3" role="alert">
+          <Box className="alert alert-danger mt-3" role="alert">
             {apiError}
-          </div>
+          </Box>
         )}
       </main>
       <Footer />

@@ -28,8 +28,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ProdutoControllerTests {
 
     private final String API_PRODUTOS = "/produtos";
-    private final String API_LOGIN = "/login";
-    private String authToken;
 
     @Autowired
     private TestRestTemplate testRestTemplate;
