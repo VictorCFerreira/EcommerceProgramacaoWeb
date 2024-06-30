@@ -5,7 +5,7 @@ import CategoryService from "@/services/CategoryService";
 import { useEffect, useState } from "react";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/CardProduto";
-import { Box, SimpleGrid, useToast, Select, Flex, IconButton } from "@chakra-ui/react";
+import { Box, SimpleGrid, useToast, Select, Flex, IconButton, Text, Button } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";  // Importa o ícone de lupa
 
 export function HomePage() {
@@ -13,16 +13,19 @@ export function HomePage() {
   const [data, setData] = useState<IProduct[]>([]);
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number | "">("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 12;
 
   useEffect(() => {
     loadData();
     loadCategories();
   }, []);
 
-  const loadData = async (categoryId: number | "" = "") => {
+  const loadData = async (categoryId: number | "" = "" ) => {
     const response = categoryId ? await ProductService.findByCategory(categoryId) : await ProductService.findAll();
     if (response?.status === 200) {
       setData(response.data);
+      setCurrentPage(1); // Reset to the first page when data changes
     } else {
       toast({
         title: 'Erro.',
@@ -33,7 +36,6 @@ export function HomePage() {
         position: 'top-right',
       });
     }
-    console.log(response);
   };
 
   const loadCategories = async () => {
@@ -50,7 +52,6 @@ export function HomePage() {
         position: 'top-right',
       });
     }
-    console.log(response);
   };
 
   const handleCategoryChange = (event) => {
@@ -58,6 +59,13 @@ export function HomePage() {
     setSelectedCategory(categoryId);
     loadData(categoryId);
   };
+
+  // Calculating current products to display based on currentPage
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = data.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -85,10 +93,21 @@ export function HomePage() {
         </Flex>
 
         <SimpleGrid columns={{ sm: 2, md: 3, lg: 4 }} spacing={8}>
-          {data.map((product) => (
+          {currentProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </SimpleGrid>
+
+        <Flex justifyContent="center" alignItems="center" mt={4}>
+         
+          <Button onClick={() => paginate(currentPage - 1)} isDisabled={currentPage === 1}>
+            Página Anterior
+          </Button>
+          <Text m={4} >Página {currentPage}</Text>
+          <Button onClick={() => paginate(currentPage + 1)} ml={2} isDisabled={currentProducts.length < productsPerPage}>
+            Próxima Página
+          </Button>
+        </Flex>
       </main>
       <Footer />
     </>
