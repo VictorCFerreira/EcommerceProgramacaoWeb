@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Stack, Spinner, Text, useToast } from '@chakra-ui/react';
+import {
+  Box, Spinner, useToast, Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+} from '@chakra-ui/react';
 import { NavBar } from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import PedidoService from '@/services/PedidoService';
-import AuthService from '@/services/AuthService';
-import CardPedido from '@/components/CardPedido';
 import { useNavigate } from 'react-router-dom';
 
 const HistoricoPage: React.FC = () => {
@@ -20,9 +28,8 @@ const HistoricoPage: React.FC = () => {
 
   const fetchPedidos = async () => {
     try {
-      //const userId = AuthService.getUserId(); // Assumindo que você tem um método para obter o ID do usuário logado
-      const data = await PedidoService.findByUserId(3);
-      setPedidos(data);
+      const result = await PedidoService.findByUser();
+      setPedidos(result.data);
       setLoading(false);
     } catch (error) {
       console.error('Erro ao carregar os pedidos: ', error);
@@ -35,21 +42,44 @@ const HistoricoPage: React.FC = () => {
     return <Spinner size="xl" />;
   }
 
+  if (!pedidos?.length) {
+    return (
+      <Box mt={4} textAlign="center">
+        Você ainda não tem nenhum pedido.
+      </Box>
+    )
+  }
+
   return (
     <Box className="root">
       <NavBar />
-      <Box className="content" p={4} display="flex" justifyContent="center" pt="90px">
-        {pedidos && pedidos.length > 0 ? (
-          <Stack spacing={2} width="4xl">
-            {pedidos.map((pedido) => (
-              <CardPedido key={pedido.id} pedido={pedido} />
-            ))}
-          </Stack>
-        ) : (
-          <Box mt={4} textAlign="center">
-            Você não tem pedidos.
-          </Box>
-        )}
+      <Box className="text-center" pt="90px">
+        <h1 className="h3 mb-3 fw-normal">Histório de pedidos</h1>
+      </Box>
+      <Box className="content" p={4} display="flex" justifyContent="center">
+        <TableContainer w={{ base: "100%", lg: "66%" }}>
+          <Table variant='simple'>
+            <TableCaption>Esses foram todos os pedidos encontrados!</TableCaption>
+            <Thead>
+              <Tr>
+                <Th>Código</Th>
+                <Th>Data</Th>
+                <Th>Descricao</Th>
+                <Th isNumeric>Total</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {pedidos.map((pedido) => (
+                <Tr key={pedido.id}>
+                  <Td>{pedido.id}</Td>
+                  <Td>{new Date(pedido.data).toLocaleDateString()}</Td>
+                  <Td>{pedido.descricao}</Td>
+                  <Td isNumeric>{pedido.totalPedido.toFixed(2).replace('.', ',')}</Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
       </Box>
       <Footer />
     </Box>

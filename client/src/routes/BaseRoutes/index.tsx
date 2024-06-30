@@ -20,12 +20,11 @@ export function BaseRoutes() {
       <Route path="/produto" element={<ProductPage />} />
       <Route path="/produto/:id" element={<ProductPage />} />
       <Route path="/carrinho" element={<CarrinhoPage />} />
-      <Route path="/historico" element={<HistoricoPage />} />
-
 
       {/* Protected Routes */}
       <Route element={<AuthenticatedRoutes />}>
         <Route path="/pagamento" element={<PagamentoPage />} />
+        <Route path="/historico" element={<HistoricoPage />} />
       </Route>
     </Routes>
   );

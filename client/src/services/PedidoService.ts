@@ -15,10 +15,10 @@ const findAll = async (): Promise<any> => {
   return response;
 };
 
-const findByUserId = async (id: number): Promise<any> => {
+const findByUser = async (): Promise<any> => {
   let response;
   try {
-    response = await api.get(`${PEDIDOS_URL}/get-by-user/${id}`);
+    response = await api.get(`${PEDIDOS_URL}/get-by-user`);
   } catch (error: any) {
     response = error.response;
   }
@@ -61,7 +61,7 @@ const PedidoService = {
   remove,
   save,
   findById,
-  findByUserId
+  findByUser
 };
 
 export default PedidoService;
