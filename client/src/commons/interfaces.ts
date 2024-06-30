@@ -33,7 +33,7 @@ export interface IPedido {
   data: Date;
   descricao: string;
   itens: IItemPedido[];
-  totalPedido: number;
+  totalPedido?: number;
 }
 
 export class Carrinho {
