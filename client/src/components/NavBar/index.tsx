@@ -1,11 +1,11 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "@/assets/book-logo.png";
 import AuthService from "@/services/AuthService";
-import { Box, Button, CloseButton, Stack, Tooltip, Text } from "@chakra-ui/react";
+import { Box, Button, CloseButton, Stack, Tooltip, Text, Wrap, WrapItem, Avatar, MenuButton, MenuList, MenuItem, Menu } from "@chakra-ui/react";
 import { FaShoppingCart } from "react-icons/fa";
 import "./style.css";
 import { useEffect, useState } from "react";
-import { ArrowForwardIcon, CloseIcon } from "@chakra-ui/icons";
+import { ArrowForwardIcon, ChevronDownIcon, CloseIcon } from "@chakra-ui/icons";
 
 export function NavBar() {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ export function NavBar() {
                   Home
                 </NavLink>
               </li>
-              <li className = "nav-item">
+              <li className="nav-item">
                 <NavLink
                   to="/historico"
                   className={(navData) =>
@@ -60,9 +60,6 @@ export function NavBar() {
               </li>
             </ul>
             <Box display="flex" alignItems="center">
-              <Text fontSize='lg' mr="4">
-                {user ? `Bem vindo, ${user}` : 'Bem vindo'}
-              </Text>
               <Button
                 rightIcon={<FaShoppingCart />}
                 colorScheme="blue"
@@ -71,9 +68,17 @@ export function NavBar() {
               >
                 Carrinho
               </Button>
-              <Tooltip hasArrow label="Sair" bg="red.600">
-                <CloseButton ml="3" onClick={onClickLogout} />
-              </Tooltip>
+              <Menu>
+                <Tooltip ml="4" hasArrow label="Painel do usuário"  bg="blue.600">
+                  <MenuButton as={Button} variant="link">
+                    <Avatar ml="4" name={user} src='' backgroundColor="" />
+                  </MenuButton>
+                </Tooltip>
+                <MenuList>
+                  <MenuItem>Histórico de pedidos</MenuItem>
+                  <MenuItem onClick={onClickLogout}>Sair</MenuItem>
+                </MenuList>
+              </Menu>
             </Box>
           </Box>
         </nav>
