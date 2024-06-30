@@ -44,15 +44,19 @@ const HistoricoPage: React.FC = () => {
 
   if (!pedidos?.length) {
     return (
-      <Box mt={4} textAlign="center">
-        Você ainda não tem nenhum pedido.
+      <Box className="root">
+        <Box className='content'>
+          <Box mt={4} textAlign="center" pt="90px">
+            Você ainda não tem nenhum pedido.
+          </Box>
+        </Box>
+        <Footer />
       </Box>
     )
   }
 
   return (
     <Box className="root">
-      <NavBar />
       <Box className="text-center" pt="90px">
         <h1 className="h3 mb-3 fw-normal">Histório de pedidos</h1>
       </Box>
