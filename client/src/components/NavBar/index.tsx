@@ -24,6 +24,11 @@ export function NavBar() {
     navigate("/login");
   };
 
+  const onClickHistorico = () => {
+    AuthService.logout();
+    navigate("/historico");
+  };
+
   return (
     <Box className="navbar-fixed-top bg-white shadow-sm mb-2">
       <Box className="container">
@@ -41,6 +46,16 @@ export function NavBar() {
                   }
                 >
                   Home
+                </NavLink>
+              </li>
+              <li className = "nav-item">
+                <NavLink
+                  to="/historico"
+                  className={(navData) =>
+                    navData.isActive ? "nav-link active" : "nav-link"
+                  }
+                >
+                  Histórico de pedidos
                 </NavLink>
               </li>
             </ul>

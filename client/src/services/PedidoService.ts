@@ -1,6 +1,8 @@
 import { IPedido, IProduct } from "@/commons/interfaces";
 import { api } from "@/lib/axios";
 
+
+
 const PEDIDOS_URL = "/pedidos";
 
 const findAll = async (): Promise<any> => {
@@ -12,6 +14,17 @@ const findAll = async (): Promise<any> => {
   }
   return response;
 };
+
+const findByUserId = async (id: number): Promise<any> => {
+  let response;
+  try {
+    response = await api.get(`${PEDIDOS_URL}/get-by-user/${id}`);
+  } catch (error: any) {
+    response = error.response;
+  }
+  return response;
+};
+
 
 const remove = async (id: number): Promise<any> => {
   let response;
@@ -48,6 +61,7 @@ const PedidoService = {
   remove,
   save,
   findById,
+  findByUserId
 };
 
 export default PedidoService;

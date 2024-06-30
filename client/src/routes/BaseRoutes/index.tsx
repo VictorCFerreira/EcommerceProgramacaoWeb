@@ -6,6 +6,7 @@ import { UserSignupPage } from "@/pages/UserSignupPage";
 import { Route, Routes } from "react-router-dom";
 import { AuthenticatedRoutes } from "../AuthenticatedRoutes";
 import PagamentoPage from "@/pages/PagamentoPage";
+import HistoricoPage from "@/pages/HistoricoPage";
 
 export function BaseRoutes() {
   return (
@@ -19,6 +20,7 @@ export function BaseRoutes() {
       <Route path="/produto" element={<ProductPage />} />
       <Route path="/produto/:id" element={<ProductPage />} />
       <Route path="/carrinho" element={<CarrinhoPage />} />
+      <Route path="/historico" element={<HistoricoPage />} />
 
 
       {/* Protected Routes */}

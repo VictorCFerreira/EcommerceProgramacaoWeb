@@ -1,7 +1,7 @@
 import { ICategory } from "@/commons/interfaces";
 import { api } from "@/lib/axios";
 
-const CATEGORIES_URL = "/categories";
+const CATEGORIES_URL = "/categorias";
 
 const findAll = async (): Promise<any> => {
   let response;
