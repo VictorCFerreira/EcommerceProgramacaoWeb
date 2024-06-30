@@ -16,11 +16,23 @@ export interface ICategory {
 
 export interface IProduct {
   id?: number;
-  nome: string;
-  preco: number;
+  nome?: string;
+  preco?: number;
+  descricao?: string;
+  categoria?: ICategory;
+  imagem?: string;
+}
+
+export interface IItemPedido {
+  produto: IProduct;
+  quantidade: number;
+}
+
+export interface IPedido {
+  id?: number;
+  data: Date;
   descricao: string;
-  categoria: ICategory;
-  imagem: string;
+  itens: IItemPedido[];
 }
 
 export class Carrinho {

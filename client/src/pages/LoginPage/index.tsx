@@ -1,18 +1,18 @@
 import { ChangeEvent, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Box, Button, Grid, GridItem, Input, FormControl, FormLabel, Heading, Alert, AlertIcon, Center, Image, useToast } from "@chakra-ui/react";
 import { IUserLogin } from "@/commons/interfaces";
 import AuthService from "@/services/AuthService";
 import { ButtonWithProgress } from "@/components/ButtonWithProgress";
 
 export function LoginPage() {
+  const { pagamento } = useParams<{ pagamento: string }>();
   const [form, setForm] = useState({
     username: "",
     password: "",
   });
   const navigate = useNavigate();
   const [pendingApiCall, setPendingApiCall] = useState(false);
-  const [apiSuccess, setApiSuccess] = useState("");
 
   const toast = useToast()
 
@@ -40,7 +40,7 @@ export function LoginPage() {
         position: 'top-right',
       })
       setTimeout(() => {
-        navigate("/");
+        pagamento ? navigate("/pagamento") : navigate("/");
       }, 500);
     } else {
       setPendingApiCall(false);

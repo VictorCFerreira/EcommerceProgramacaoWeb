@@ -5,6 +5,8 @@ import AuthService from "@/services/AuthService";
 import { IUserSigup } from "@/commons/interfaces";
 import { ButtonWithProgress } from "@/components/ButtonWithProgress";
 import { Input } from "@/components/Input";
+import { Box, Button, Grid, GridItem, FormControl, FormLabel, Heading, Alert, AlertIcon, Center, Image, useToast } from "@chakra-ui/react";
+
 
 export function UserSignupPage() {
   const [form, setForm] = useState({
@@ -57,76 +59,90 @@ export function UserSignupPage() {
 
   return (
     <>
-      <main className="form-signup w-100 m-auto">
-        <form>
-          <div className="text-center">
-            <h1 className="h3 mb-3 fw-normal">Novo usuário</h1>
-          </div>
-          <div className="form-floating">
-            <Input
-              id="displayName"
-              name="displayName"
-              type="text"
-              placeholder="Informe o seu nome"
-              className="form-control"
-              onChange={onChange}
-              value={form.displayName}
-              hasError={errors.displayName ? true : false}
-              error={errors.displayName}
-              label="Informe o seu nome"
-            />
-          </div>
-          <div className="form-floating">
-            <Input
-              id="username"
-              name="username"
-              type="text"
-              placeholder="Informe o seu usuário"
-              className="form-control"
-              onChange={onChange}
-              value={form.username}
-              hasError={errors.username ? true : false}
-              error={errors.username}
-              label="Informe o seu usuário"
-            />
-          </div>
-          <div className="form-floating">
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="******"
-              className="form-control"
-              onChange={onChange}
-              value={form.password}
-              hasError={errors.password ? true : false}
-              error={errors.password}
-              label="Informe a sua senha"
-            />
-          </div>
-
-          {apiError && (
-            <div className="col-12 mb-3">
-              <div className="alert alert-danger">{apiError}</div>
-            </div>
-          )}
-          {apiSuccess && (
-            <div className="col-12 mb-3">
-              <div className="alert alert-success">{apiSuccess}</div>
-            </div>
-          )}
-
-          <ButtonWithProgress
-            onClick={onClickSignup}
-            disabled={pendingApiCall}
-            pendingApiCall={pendingApiCall}
-            text="Cadastrar"
-          />
-        </form>
-        <div className="text-center">
-          <Link to="/login">Ir para tela de login</Link>
-        </div>
-      </main>
+      <Center height="100vh" width="100vw" bg="gray.100">
+        <Grid templateColumns="repeat(3, 1fr)" gap={0} width="100%" height="100%">
+          <GridItem colSpan={1} bg="white" display="flex" justifyContent="center" alignItems="center">
+            <Box height="100%" width="100%">
+              <Image
+                src="https://ae01.alicdn.com/kf/Hd8ead3e2827a4051b6d9979543041871k/Biblioteca-livros-coloridos-prateleira-banner-backdrops-fotografia-estudantes-fundos-para-crian-as-festa-de-anivers-rio.jpg"
+                alt="Imagem biblioteca"
+                objectFit="cover"
+                height="100%"
+                width="100%"
+              />
+            </Box>
+          </GridItem>
+          <GridItem colSpan={1} bg="white" display="flex" justifyContent="center" alignItems="center">
+            <Box p={8} width="100%" maxW="md">
+              <Heading as="h1" size="lg" textAlign="center" mb={6}>Login</Heading>
+              <form>
+                <FormControl id="name" mb={4}>
+                  <FormLabel>Informe o seu nome</FormLabel>
+                  <Input
+                    id="displayName"
+                    name="displayName"
+                    type="text"
+                    placeholder="Informe o seu nome"
+                    className="form-control"
+                    onChange={onChange}
+                    value={form.displayName}
+                    hasError={errors.displayName ? true : false}
+                    error={errors.displayName}
+                  />
+                </FormControl>
+                <FormControl id="username" mb={4}>
+                  <FormLabel>Informe o seu usuário</FormLabel>
+                  <Input
+                    id="username"
+                    name="username"
+                    type="text"
+                    placeholder="Informe o seu usuário"
+                    className="form-control"
+                    onChange={onChange}
+                    value={form.username}
+                    hasError={errors.username ? true : false}
+                    error={errors.username}
+                  />
+                </FormControl>
+                <FormControl id="password" mb={4}>
+                  <FormLabel>Informe a senha</FormLabel>
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="******"
+                    className="form-control"
+                    onChange={onChange}
+                    value={form.password}
+                    hasError={errors.password ? true : false}
+                    error={errors.password}
+                  />
+                </FormControl>
+                <ButtonWithProgress
+                  onClick={onClickSignup}
+                  disabled={pendingApiCall}
+                  pendingApiCall={pendingApiCall}
+                  text="Cadastrar"
+                />
+              </form>
+              <Center mt={4}>
+                <Link to="/login">Ir para tela de login</Link>
+              </Center>
+            </Box>
+          </GridItem>
+          <GridItem colSpan={1} bg="white" display="flex" justifyContent="center" alignItems="center">
+            <Box height="100%" width="100%">
+              <Image
+                src="https://ae01.alicdn.com/kf/Hd8ead3e2827a4051b6d9979543041871k/Biblioteca-livros-coloridos-prateleira-banner-backdrops-fotografia-estudantes-fundos-para-crian-as-festa-de-anivers-rio.jpg"
+                alt="Imagem biblioteca"
+                objectFit="cover"
+                height="100%"
+                width="100%"
+              />
+            </Box>
+          </GridItem>
+        </Grid>
+      </Center>
     </>
   );
 }

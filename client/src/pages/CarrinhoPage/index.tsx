@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Stack, Checkbox, Input, Text, Spinner, Flex } from '@chakra-ui/react';
+import { Box, Button, Stack, Checkbox, Input, Text, Spinner, Flex, useToast } from '@chakra-ui/react';
 import { NavBar } from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import CarrinhoService from '@/services/CarrinhoService';
 import { Carrinho } from '@/commons/interfaces';
 import ProductCarrinhoCard from '@/components/CardCarrinho';
+import AuthService from '@/services/AuthService';
+import { useNavigate } from 'react-router-dom';
 
 const CarrinhoPage: React.FC = () => {
   const [carrinho, setCarrinho] = useState<Carrinho[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [total, setTotal] = useState(0);
-  const [frete, setFrete] = useState(0);
-  const [isGift, setIsGift] = useState(false);
+
+  const navigate = useNavigate();
+  const toast = useToast()
 
   useEffect(() => {
     fetchCarrinho();
@@ -29,7 +32,19 @@ const CarrinhoPage: React.FC = () => {
   };
 
   const onClickConfirmar = () => {
-    console.log("Compra confirmada!");
+    if(AuthService.isAuthenticaded()){
+      navigate(`/pagamento`);
+    }else {
+      toast({
+        title: 'Aviso.',
+        description: "Faça login para continuar.",
+        status: 'info',
+        duration: 1000,
+        isClosable: true,
+        position: 'top-right',
+      });
+      navigate(`/login/true`);
+    }
   };
 
 

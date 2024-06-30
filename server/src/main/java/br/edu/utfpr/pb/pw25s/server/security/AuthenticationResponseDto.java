@@ -11,4 +11,6 @@ public class AuthenticationResponseDto {
 
     private String token;
 
+    private String displayName;
+
 }

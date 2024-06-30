@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Stack, Checkbox, Input, Text, Spinner, Flex } from '@chakra-ui/react';
+import { Box, Button, Stack, Checkbox, Input, Text, Spinner, Flex, useToast } from '@chakra-ui/react';
 import { NavBar } from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import CarrinhoService from '@/services/CarrinhoService';
-import { Carrinho } from '@/commons/interfaces';
+import { Carrinho, IItemPedido, IPedido } from '@/commons/interfaces';
 import ProductCarrinhoCard from '@/components/CardCarrinho';
+import PedidoService from '@/services/PedidoService';
 
-const CarrinhoPage: React.FC = () => {
+const PagamentoPage: React.FC = () => {
   const [carrinho, setCarrinho] = useState<Carrinho[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [total, setTotal] = useState(0);
-  const [frete, setFrete] = useState(0);
-  const [isGift, setIsGift] = useState(false);
+
+  const toast = useToast()
 
   useEffect(() => {
     fetchCarrinho();
@@ -28,8 +29,33 @@ const CarrinhoPage: React.FC = () => {
     }
   };
 
-  const onClickConfirmar = () => {
-    console.log("Compra confirmada!");
+  const onClickConfirmar = async () => {
+    const pedido: IPedido = {
+      data: new Date(),
+      descricao: "Pedido",
+      itens: carrinho
+    }
+
+    const response = await PedidoService.save(pedido);
+    if (response?.status == 201) {
+      toast({
+        title: 'Sucesso',
+        description: "Pedido realizado com sucesso!",
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+        position: 'top-right',
+      })
+    } else {
+      toast({
+        title: 'Erro.',
+        description: "Ocorreu um erro ao salvar o pedido.",
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+        position: 'top-right',
+      })
+    }
   };
 
 
@@ -51,7 +77,7 @@ const CarrinhoPage: React.FC = () => {
               <Text mb={2}>Valor Total: R${total.toFixed(2)}</Text>
               <Flex justifyContent="flex-end" mt={4}>
                 <Button colorScheme="blue" onClick={onClickConfirmar}>
-                  Confirmar Compra
+                  Confirmar pagamento
                 </Button>
               </Flex>
             </Box>
@@ -67,4 +93,4 @@ const CarrinhoPage: React.FC = () => {
   );
 };
 
-export default CarrinhoPage;
+export default PagamentoPage;

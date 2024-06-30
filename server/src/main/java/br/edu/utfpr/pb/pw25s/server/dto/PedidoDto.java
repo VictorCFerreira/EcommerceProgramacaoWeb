@@ -26,7 +26,6 @@ public class PedidoDto {
 
     private BigDecimal totalPedido;
 
-    @NotNull
     private UsuarioDto usuario;
 
     @NotNull

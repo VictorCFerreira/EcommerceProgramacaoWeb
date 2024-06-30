@@ -3,10 +3,14 @@ package br.edu.utfpr.pb.pw25s.server.service.impl;
 import br.edu.utfpr.pb.pw25s.server.model.ItemPedido;
 import br.edu.utfpr.pb.pw25s.server.model.Pedido;
 import br.edu.utfpr.pb.pw25s.server.model.Produto;
+import br.edu.utfpr.pb.pw25s.server.model.User;
 import br.edu.utfpr.pb.pw25s.server.repository.PedidoRepository;
+import br.edu.utfpr.pb.pw25s.server.service.AuthService;
 import br.edu.utfpr.pb.pw25s.server.service.interfaces.IPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +30,10 @@ public class PedidoServiceImpl extends CrudServiceImpl<Pedido, Long>
     @Autowired
     ItemPedidoServiceImpl itemPedidoService;
 
+    @Autowired
+    AuthService authService;
+
+
     public PedidoServiceImpl(PedidoRepository pedidoRepository) {
         this.pedidoRepository = pedidoRepository;
     }
@@ -40,6 +48,9 @@ public class PedidoServiceImpl extends CrudServiceImpl<Pedido, Long>
     public Pedido save(Pedido pedido) {
 
         // pegar o ID do cliente pelo TOKEN
+        Authentication auth =  SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authService.loadUserByUsername(auth.getPrincipal().toString());
+        pedido.setUsuario(user);
 
         // remove os itens do pedido que foram excluidos
         if (pedido.getId() != null && pedido.getId() != 0) {

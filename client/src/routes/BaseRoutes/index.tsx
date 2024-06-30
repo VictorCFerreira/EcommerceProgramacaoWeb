@@ -1,11 +1,11 @@
 import CarrinhoPage from "@/pages/CarrinhoPage";
 import { HomePage } from "@/pages/HomePage";
 import { LoginPage } from "@/pages/LoginPage";
-import ProductPage from "@/pages/ProductPage";
+import ProductPage from "@/pages/ProdutoPage";
 import { UserSignupPage } from "@/pages/UserSignupPage";
 import { Route, Routes } from "react-router-dom";
 import { AuthenticatedRoutes } from "../AuthenticatedRoutes";
-// import { AuthenticatedRoutes } from "../AuthenticatedRoutes";
+import PagamentoPage from "@/pages/PagamentoPage";
 
 export function BaseRoutes() {
   return (
@@ -13,6 +13,7 @@ export function BaseRoutes() {
       {/* Public Routes */}
       <Route path="/signup" element={<UserSignupPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/login/:pagamento" element={<LoginPage />} />
       <Route path="/" element={<HomePage />} />
       <Route path="/home" element={<HomePage />} />
       <Route path="/produto" element={<ProductPage />} />
@@ -22,7 +23,7 @@ export function BaseRoutes() {
 
       {/* Protected Routes */}
       <Route element={<AuthenticatedRoutes />}>
-        <Route path="/pagamento" element={<CarrinhoPage />} />
+        <Route path="/pagamento" element={<PagamentoPage />} />
       </Route>
     </Routes>
   );

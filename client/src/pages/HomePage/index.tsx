@@ -4,13 +4,12 @@ import ProductService from "@/services/ProductService";
 import { useEffect, useState } from "react";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/Card";
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, SimpleGrid, useToast } from "@chakra-ui/react";
 
 export function HomePage() {
 
+  const toast = useToast()
   const [data, setData] = useState<IProduct[]>([]);
-  const [apiError, setApiError] = useState("");
-  const [apiRemoveSuccess, setApiRemoveSuccess] = useState("");
 
   useEffect(() => {
     loadData();
@@ -21,7 +20,14 @@ export function HomePage() {
     if (response?.status === 200) {
       setData(response.data);
     } else {
-      setApiError("Falha ao carregar a lista de produtos!");
+      toast({
+        title: 'Erro.',
+        description: "Ocorreu um erro ao carregar a lista de produtos.",
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+        position: 'top-right',
+      })
     }
     console.log(response);
   };
@@ -40,11 +46,6 @@ export function HomePage() {
           ))}
         </SimpleGrid>
 
-        {apiError && (
-          <Box className="alert alert-danger mt-3" role="alert">
-            {apiError}
-          </Box>
-        )}
       </main>
       <Footer />
     </>

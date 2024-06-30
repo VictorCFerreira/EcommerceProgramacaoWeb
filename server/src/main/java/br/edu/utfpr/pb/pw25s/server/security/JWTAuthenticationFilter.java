@@ -68,10 +68,14 @@ public class JWTAuthenticationFilter
                         SecurityConstants.EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(SecurityConstants.SECRET));
         response.setContentType("application/json");
-        // {token : "123.456.789"}
+        String displayName = "";
+        if (authResult.getPrincipal() instanceof User) {
+            displayName = ((User) authResult.getPrincipal()).getDisplayName();
+        }
+
         response.getWriter().write(
             new ObjectMapper().writeValueAsString(
-                    new AuthenticationResponseDto(token)
+                    new AuthenticationResponseDto(token, displayName)
             )
         );
     }

@@ -16,6 +16,7 @@ const login = async (user: IUserLogin) => {
   try {
     response = await api.post("/login", user);
     localStorage.setItem("token", JSON.stringify(response.data.token));
+    localStorage.setItem("user", JSON.stringify(response.data.displayName));
 
     api.defaults.headers.common[
       "Authorization"
@@ -38,6 +39,7 @@ const isAuthenticaded = (): boolean => {
 
 const logout = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("user");
   api.defaults.headers.common["Authorization"] = "";
 };
 

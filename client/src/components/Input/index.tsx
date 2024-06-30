@@ -4,7 +4,7 @@ interface IInput {
   name: string;
   id: string;
   className: string;
-  label: string;
+  label?: string;
   type: string;
   placeholder: string;
   value: string;
@@ -41,7 +41,7 @@ export function Input({
         onChange={onChange}
         value={value}
       />
-      <label htmlFor={id}>{label}</label>
+      {/* <label htmlFor={id}>{label}</label> */}
       {hasError && <div className="invalid-feedback">{error}</div>}
     </>
   );
