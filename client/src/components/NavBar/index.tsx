@@ -11,6 +11,8 @@ export function NavBar() {
   const navigate = useNavigate();
   const [user, setUser] = useState<string>("");
 
+  const isLogado = AuthService.isAuthenticaded();
+
   useEffect(() => {
     setUser(localStorage.getItem("user")?.replace(/"/g, "") || null)
   }, []);
@@ -24,8 +26,11 @@ export function NavBar() {
     navigate("/login");
   };
 
+  const onClickLogin = () => {
+    navigate("/login");
+  };
+
   const onClickHistorico = () => {
-    AuthService.logout();
     navigate("/historico");
   };
 
@@ -48,16 +53,6 @@ export function NavBar() {
                   Home
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink
-                  to="/historico"
-                  className={(navData) =>
-                    navData.isActive ? "nav-link active" : "nav-link"
-                  }
-                >
-                  Histórico de pedidos
-                </NavLink>
-              </li>
             </ul>
             <Box display="flex" alignItems="center">
               <Button
@@ -69,14 +64,20 @@ export function NavBar() {
                 Carrinho
               </Button>
               <Menu>
-                <Tooltip ml="4" hasArrow label="Painel do usuário"  bg="blue.600">
+                <Tooltip ml="4" hasArrow label="Painel do usuário" bg="blue.600">
                   <MenuButton as={Button} variant="link">
                     <Avatar ml="4" name={user} src='' backgroundColor="" />
                   </MenuButton>
                 </Tooltip>
                 <MenuList>
-                  <MenuItem>Histórico de pedidos</MenuItem>
-                  <MenuItem onClick={onClickLogout}>Sair</MenuItem>
+                  {isLogado ? (
+                    <>
+                      <MenuItem onClick={onClickHistorico}>Histórico de pedidos</MenuItem>
+                      <MenuItem onClick={onClickLogout}>Sair</MenuItem>
+                    </>
+                  ) : (
+                    <MenuItem onClick={onClickLogin}>Entrar</MenuItem>
+                  )}
                 </MenuList>
               </Menu>
             </Box>

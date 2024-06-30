@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { IProduct } from '@/commons/interfaces';
 import ProductService from '@/services/ProductService';
-import { Box, Heading, Text, Image, Spinner, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Spacer, ButtonGroup, Button } from '@chakra-ui/react';
+import { Box, Heading, Text, Image, Spinner, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Spacer, ButtonGroup, Button, useToast } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { NavBar } from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import CarrinhoService from '@/services/CarrinhoService';
+import AuthService from '@/services/AuthService';
 
 const ProductPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<IProduct | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const toast = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProduct();
@@ -29,7 +33,24 @@ const ProductPage: React.FC = () => {
   };
 
   const addToCarrinho = async () => {
+    await CarrinhoService.addToCarrinho(product, 1, toast);
+  }
+
+  const comprarAgora = async () => {
     await CarrinhoService.addToCarrinho(product);
+    if(AuthService.isAuthenticaded()){
+      navigate(`/pagamento`);
+    }else {
+      toast({
+        title: 'Aviso.',
+        description: "Faça login para continuar.",
+        status: 'info',
+        duration: 1000,
+        isClosable: true,
+        position: 'top-right',
+      });
+      navigate(`/login/true`);
+    }
   }
 
   if (loading) {
@@ -73,7 +94,7 @@ const ProductPage: React.FC = () => {
                 <Button variant='outline' colorScheme='blue' onClick={addToCarrinho}>
                   Adicionar ao carrinho
                 </Button>
-                <Button variant='solid' colorScheme='blue' mr="auto">
+                <Button variant='solid' colorScheme='blue' mr="auto" onClick={comprarAgora}>
                   Comprar agora
                 </Button>
               </ButtonGroup>

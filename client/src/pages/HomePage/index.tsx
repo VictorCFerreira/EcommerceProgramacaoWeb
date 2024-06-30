@@ -4,7 +4,7 @@ import ProductService from "@/services/ProductService";
 import CategoryService from "@/services/CategoryService";
 import { useEffect, useState } from "react";
 import Footer from "@/components/Footer";
-import ProductCard from "@/components/Card";
+import ProductCard from "@/components/CardProduto";
 import { Box, SimpleGrid, useToast, Select, Flex, IconButton } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";  // Importa o ícone de lupa
 

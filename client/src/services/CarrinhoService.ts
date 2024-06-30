@@ -1,11 +1,13 @@
 import { IProduct } from "@/commons/interfaces";
+import { useToast } from "@chakra-ui/react";
 
 interface IProdutoCarrinho {
   produto: IProduct;
   quantidade: number;
 }
 
-const addToCarrinho = async (produto: IProduct, qtde: number = 1) => {
+const addToCarrinho = async (produto: IProduct, qtde: number = 1, toast?: any) => {
+
   let carrinho: IProdutoCarrinho[] = JSON.parse(
     localStorage.getItem("carrinho") || "[]"
   );
@@ -24,6 +26,17 @@ const addToCarrinho = async (produto: IProduct, qtde: number = 1) => {
   }
 
   localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+  if(toast){
+    toast({
+      title: 'Sucesso.',
+      description: "Produto adicionado ao carrinho!",
+      status: 'success',
+      duration: 1000,
+      isClosable: true,
+      position: 'top-right',
+    });
+  }
 };
 
 const removerDoCarrinho = async (produtoId: number) => {
