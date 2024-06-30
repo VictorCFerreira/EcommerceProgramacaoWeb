@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/CardProduto";
 import { Box, SimpleGrid, useToast, Select, Flex, IconButton, Text, Button } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";  // Importa o ícone de lupa
+import { SearchIcon } from "@chakra-ui/icons";
 
 export function HomePage() {
   const toast = useToast();
@@ -25,7 +25,7 @@ export function HomePage() {
     const response = categoryId ? await ProductService.findByCategory(categoryId) : await ProductService.findAll();
     if (response?.status === 200) {
       setData(response.data);
-      setCurrentPage(1); // Reset to the first page when data changes
+      setCurrentPage(1); 
     } else {
       toast({
         title: 'Erro.',
@@ -60,7 +60,6 @@ export function HomePage() {
     loadData(categoryId);
   };
 
-  // Calculating current products to display based on currentPage
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = data.slice(indexOfFirstProduct, indexOfLastProduct);
@@ -100,11 +99,11 @@ export function HomePage() {
 
         <Flex justifyContent="center" alignItems="center" mt={4}>
          
-          <Button onClick={() => paginate(currentPage - 1)} isDisabled={currentPage === 1}>
+          <Button colorScheme = "blue"variant="outline"onClick={() => paginate(currentPage - 1)} isDisabled={currentPage === 1}>
             Página Anterior
           </Button>
           <Text m={4} >Página {currentPage}</Text>
-          <Button onClick={() => paginate(currentPage + 1)} ml={2} isDisabled={currentProducts.length < productsPerPage}>
+          <Button colorScheme = "blue"variant="outline" onClick={() => paginate(currentPage + 1)} ml={2} isDisabled={currentProducts.length < productsPerPage}>
             Próxima Página
           </Button>
         </Flex>
