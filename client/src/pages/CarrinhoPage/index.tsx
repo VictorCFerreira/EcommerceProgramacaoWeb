@@ -24,6 +24,7 @@ const CarrinhoPage: React.FC = () => {
     try {
       const data = await CarrinhoService.getCarrinho();
       setCarrinho(data);
+      setTotal(data.reduce((acc, d) => acc + d.produto.preco * d.quantidade, 0));
       setLoading(false);
     } catch (error) {
       console.error('Erro ao carregar o carrinho: ', error);
@@ -59,7 +60,7 @@ const CarrinhoPage: React.FC = () => {
         {carrinho && carrinho.length > 0 ? (
           <Stack spacing={2} width="4xl">
             {carrinho.map((car) => (
-              <ProductCarrinhoCard key={car.produto.id} carrinho={car} />
+              <ProductCarrinhoCard key={car.produto.id} carrinho={car} onEvent={fetchCarrinho} />
             ))}
             <Box mt={4} p={4} borderWidth="1px" borderRadius="lg">
               <Text fontSize="2xl" mb={4}>Resumo do Pedido</Text>
