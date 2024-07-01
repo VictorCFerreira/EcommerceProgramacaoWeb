@@ -6,6 +6,7 @@ import { IUserSigup } from "@/commons/interfaces";
 import { ButtonWithProgress } from "@/components/ButtonWithProgress";
 import { Input } from "@/components/Input";
 import { Box, Button, Grid, GridItem, FormControl, FormLabel, Heading, Alert, AlertIcon, Center, Image, useToast } from "@chakra-ui/react";
+import logo from "@/assets/book-logo.png";
 
 
 export function UserSignupPage() {
@@ -74,6 +75,11 @@ export function UserSignupPage() {
           </GridItem>
           <GridItem colSpan={1} bg="white" display="flex" justifyContent="center" alignItems="center">
             <Box p={8} width="100%" maxW="md">
+              <Box display="flex" justifyContent="center" alignItems="flex-start" mb={4}>
+                <Link to="/" className="navbar-brand">
+                  <img src={logo} width="45" alt="LIVRO" />
+                </Link>
+              </Box>
               <Heading as="h1" size="lg" textAlign="center" mb={6}>Login</Heading>
               <form>
                 <FormControl id="name" mb={4}>
