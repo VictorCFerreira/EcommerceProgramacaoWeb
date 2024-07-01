@@ -4,6 +4,7 @@ import { Box, Button, Grid, GridItem, Input, FormControl, FormLabel, Heading, Al
 import { IUserLogin } from "@/commons/interfaces";
 import AuthService from "@/services/AuthService";
 import { ButtonWithProgress } from "@/components/ButtonWithProgress";
+import logo from "@/assets/book-logo.png";
 
 export function LoginPage() {
   const { pagamento } = useParams<{ pagamento: string }>();
@@ -71,11 +72,16 @@ export function LoginPage() {
         </GridItem>
         <GridItem colSpan={1} bg="white" display="flex" justifyContent="center" alignItems="center">
           <Box p={8} width="100%" maxW="md">
+            <Box display="flex" justifyContent="center" alignItems="flex-start" mb={4}>
+              <Link to="/" className="navbar-brand">
+                <img src={logo} width="45" alt="LIVRO" />
+              </Link>
+            </Box>
             <Heading as="h1" size="lg" textAlign="center" mb={6}>Login</Heading>
             <form>
               <FormControl id="username" mb={4}>
                 <FormLabel>Informe o usuário</FormLabel>
-                <Input 
+                <Input
                   name="username"
                   type="text"
                   placeholder="Informe o usuário"
@@ -84,14 +90,14 @@ export function LoginPage() {
               </FormControl>
               <FormControl id="password" mb={4}>
                 <FormLabel>Informe a senha</FormLabel>
-                <Input 
+                <Input
                   name="password"
                   type="password"
                   placeholder="Informe a senha"
                   onChange={onChange}
                 />
               </FormControl>
-              <ButtonWithProgress 
+              <ButtonWithProgress
                 onClick={onClickLogin}
                 disabled={pendingApiCall}
                 pendingApiCall={pendingApiCall}
@@ -103,6 +109,7 @@ export function LoginPage() {
             </Center>
           </Box>
         </GridItem>
+
         <GridItem colSpan={1} bg="white" display="flex" justifyContent="center" alignItems="center">
           <Box height="100%" width="100%">
             <Image
