@@ -6,50 +6,41 @@ const Footer = () => {
       <div className="container p-4">
         <div className="row">
           <div className="col-lg-6 col-md-12 mb-4 mb-md-0">
-            <h5 className="text-uppercase">Footer Content</h5>
+            <h5 className="text-uppercase">WebBooks</h5>
 
             <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste
-              atque ea quis molestias. Fugiat pariatur maxime quis culpa
-              corporis vitae repudiandae aliquam voluptatem veniam, est atque
-              cumque eum delectus sint!
+            Bem-vindo à WebBooks, sua loja de livros online! Oferecemos uma vasta seleção de títulos de todos os gêneros, desde clássicos até os lançamentos mais recentes. Navegue, descubra novos autores e aproveite nossas promoções exclusivas. Compre online e receba no conforto da sua casa. WebBooks – Sua próxima leitura está aqui.
             </p>
           </div>
 
           <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
-            <h5 className="text-uppercase">Links</h5>
+            <h5 className="text-uppercase">Redes Sociais</h5>
 
             <ul className="list-unstyled mb-0">
               <li>
-                <a href="#!" className="text-dark">Link 1</a>
+                <a href="#!" className="text-dark">Facebook.com/WebBooks</a>
               </li>
               <li>
-                <a href="#!" className="text-dark">Link 2</a>
+                <a href="#!" className="text-dark">X.com/WebBooks</a>
               </li>
               <li>
-                <a href="#!" className="text-dark">Link 3</a>
-              </li>
-              <li>
-                <a href="#!" className="text-dark">Link 4</a>
+                <a href="#!" className="text-dark">Instagram.com/WebBooks</a>
               </li>
             </ul>
           </div>
 
           <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
-            <h5 className="text-uppercase">Links</h5>
+            <h5 className="text-uppercase">Entre em contato</h5>
 
             <ul className="list-unstyled mb-0">
               <li>
-                <a href="#!" className="text-dark">Link 1</a>
+                <a href="#!" className="text-dark">Parcerias</a>
               </li>
               <li>
-                <a href="#!" className="text-dark">Link 2</a>
+                <a href="#!" className="text-dark">Trabalhe Conosco!</a>
               </li>
               <li>
-                <a href="#!" className="text-dark">Link 3</a>
-              </li>
-              <li>
-                <a href="#!" className="text-dark">Link 4</a>
+                <a href="#!" className="text-dark">Deixe sua avaliação</a>
               </li>
             </ul>
           </div>
@@ -57,8 +48,8 @@ const Footer = () => {
       </div>
 
       <div className="text-center p-3" style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
-        © {new Date().getFullYear()} Seu Site:
-        <a className="text-dark" href="https://www.example.com/"> Example.com</a>
+        © {new Date().getFullYear()}
+        <a className="text-dark" href="https://www.WebBooks.com/"> WebBooks.com</a>
       </div>
     </footer>
   );

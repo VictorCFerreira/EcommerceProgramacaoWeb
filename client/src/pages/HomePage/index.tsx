@@ -99,7 +99,7 @@ export function HomePage() {
 
         <Flex justifyContent="center" alignItems="center" mt={4}>
          
-          <Button colorScheme = "blue"variant="outline"onClick={() => paginate(currentPage - 1)} isDisabled={currentPage === 1}>
+          <Button colorScheme = "blue"variant="outline" onClick={() => paginate(currentPage - 1)} isDisabled={currentPage === 1}>
             Página Anterior
           </Button>
           <Text m={4} >Página {currentPage}</Text>
