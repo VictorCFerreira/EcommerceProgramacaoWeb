@@ -80,7 +80,7 @@ export function UserSignupPage() {
                   <img src={logo} width="45" alt="LIVRO" />
                 </Link>
               </Box>
-              <Heading as="h1" size="lg" textAlign="center" mb={6}>Login</Heading>
+              <Heading as="h1" size="lg" textAlign="center" mb={6}>Cadastro</Heading>
               <form>
                 <FormControl id="name" mb={4}>
                   <FormLabel>Informe o seu nome</FormLabel>

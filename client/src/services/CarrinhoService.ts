@@ -54,10 +54,39 @@ const getCarrinho = async (): Promise<IProdutoCarrinho[]> => {
   return carrinho;
 };
 
+const limparCarrinho = async (): Promise<void> => {
+  return localStorage.removeItem("carrinho");
+};
+
+const alterarQuantidade = async (produtoId: number, novaQuantidade: number) => {
+  let carrinho: IProdutoCarrinho[] = JSON.parse(
+    localStorage.getItem("carrinho") || "[]"
+  );
+
+  let produtoEncontrado = false;
+  carrinho = carrinho.map((item) => {
+    if (item.produto.id == produtoId) {
+      produtoEncontrado = true;
+      if (novaQuantidade > 0) {
+        item.quantidade = novaQuantidade;
+      } else {
+        return null;
+      }
+    }
+    return item;
+  }).filter(Boolean) as IProdutoCarrinho[];
+
+  if (produtoEncontrado) {
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  }
+};
+
 const CarrinhoService = {
   addToCarrinho,
   removerDoCarrinho,
   getCarrinho,
+  alterarQuantidade,
+  limparCarrinho
 };
 
 export default CarrinhoService;

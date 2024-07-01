@@ -3,9 +3,8 @@ import { Card, CardBody, Heading, Stack, Text, Button, Image, CardFooter, Number
 
 const ProductPagamentoCard: React.FC<any> = ({ carrinho }) => {
 
-  const parse = (val) => val.replace(/^\$/, '')
-
-  const [value, setValue] = React.useState(carrinho.quantidade)
+  const precoUnitario = carrinho.produto.preco;
+  const precoTotal = (precoUnitario * carrinho.quantidade).toFixed(2);
 
   return (
     <>
@@ -23,6 +22,8 @@ const ProductPagamentoCard: React.FC<any> = ({ carrinho }) => {
               <Heading size='md'>{carrinho.produto.nome}</Heading>
               <Text py='2'>
                 Quantidade: {carrinho.quantidade}
+                <br />Preço unitário: R$ {precoUnitario.toFixed(2).replace('.', ',')}
+                <br />Preço total: R$ {precoTotal.replace('.', ',')}
               </Text>
             </CardBody>
             <CardFooter>

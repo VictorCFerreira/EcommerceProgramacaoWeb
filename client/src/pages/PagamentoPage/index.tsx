@@ -50,6 +50,7 @@ const PagamentoPage: React.FC = () => {
           isClosable: true,
           position: 'top-right',
         });
+        await CarrinhoService.limparCarrinho();
         setCarrinho(null);
         setTotal(0);
       } else {

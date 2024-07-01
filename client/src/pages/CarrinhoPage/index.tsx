@@ -63,8 +63,8 @@ const CarrinhoPage: React.FC = () => {
               <ProductCarrinhoCard key={car.produto.id} carrinho={car} onEvent={fetchCarrinho} />
             ))}
             <Box mt={4} p={4} borderWidth="1px" borderRadius="lg">
-              <Text fontSize="2xl" mb={4}>Resumo do Pedido</Text>
-              <Text mb={2}>Valor Total: R${total.toFixed(2)}</Text>
+              <Text fontSize="20px" mb={4}>Resumo do Pedido</Text>
+              <Text fontSize="3xl" mb={2}>Valor Total: R${total.toFixed(2)}</Text>
               <Flex justifyContent="flex-end" mt={4}>
                 <Button colorScheme="blue" onClick={onClickConfirmar}>
                   Confirmar Compra
